@@ -7,13 +7,15 @@ let moleY = [555, 627, 564, 597, 688];
 let currentMole = -1;
 let score = 0;
 let interval = 1550;
-let backgroundImage, bottomLayer, topLayer;
+let backgroundImage, bottomLayer, topLayer, gnomeImg; // Declare variable for gnome image
 let gameWon = false; // Variable to track if the game is won
+let moleSize = 80; // Size of the ellipses
 
 function preload() {
   backgroundImage = loadImage('art/2.png');
   bottomLayer = loadImage('art/1.png');
   topLayer = loadImage('art/3.png');
+  gnomeImg = loadImage('art/gnomo.png'); // Load gnome image
 }
 
 function setup() {
@@ -29,11 +31,17 @@ function draw() {
   image(topLayer, 0, 0, canvasWidth, canvasHeight); // Top layer 
 
   for (let i = 0; i < moleX.length; i++) {
-    fill(102, 51, 0);
+    
+noStroke();
+    fill(102, 51, 0,0);
     if (i === currentMole) {
-      fill(0, 255, 0);
+      fill(0, 255, 0,0);
     }
-    ellipse(moleX[i], moleY[i], 80, 80);
+    ellipse(moleX[i], moleY[i], moleSize, moleSize);
+  }
+
+  if (currentMole !== -1) {
+    image(gnomeImg, moleX[currentMole] - moleSize / 2, moleY[currentMole] - moleSize / 2 - 30, moleSize, moleSize); // Adjust y-coordinate
   }
 
   fill(0);
