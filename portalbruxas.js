@@ -9,7 +9,7 @@ function setup() {
   capture.hide(); // Hide the video feed
 
   // Create the button
-  button = createButton('Go to bruxas.html');
+  button = createButton('Bruxas');
   button.position(width / 2 - 100, height / 2);
   button.size(200, 50);
   button.mousePressed(goToBruxas);
