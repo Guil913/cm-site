@@ -1,70 +1,66 @@
 let circleX;
 let circleY;
 let circleSize;
-let barX;
-let barY;
-let barWidth;
-let barHeight;
 let arrowX;
 let arrowSpeed;
 let clickedOnGreen;
-let clickedOnRed;
+let eggImages = [];
+let currentEggIndex = 0;
+let won = false;
+
+function preload() {
+  for (let i = 1; i <= 7; i++) {
+    eggImages.push(loadImage('art/egg' + i + '.png'));
+  }
+}
 
 function setup() {
   createCanvas(1080, 760);
   circleX = width / 2;
   circleY = height / 2;
   circleSize = 100;
-  barX = 100;
-  barY = 300;
-  barWidth = 400;
-  barHeight = 20;
-  arrowX = barX;
-  arrowSpeed = 4; // Increased speed
+  arrowX = 100;
+  arrowSpeed = 4;
   clickedOnGreen = 0;
-  clickedOnRed = 0;
 }
 
 function draw() {
   background(220);
   
-  // Draw green circle
-  fill(0, 255, 0);
+  noStroke();
+  fill(0, 255, 0, 0);
   ellipse(circleX, circleY, circleSize);
   
-  // Draw bar (divided into three parts)
-  let thirdWidth = barWidth / 3;
-  fill(255, 0, 0); // Red
-  rect(barX, barY, thirdWidth, barHeight);
-  fill(0, 255, 0); // Green
-  rect(barX + thirdWidth, barY, thirdWidth, barHeight);
-  fill(255, 0, 0); // Red
-  rect(barX + 2 * thirdWidth, barY, thirdWidth, barHeight);
+  fill(255, 0, 0, 0);
+  rect(arrowX, circleY - 10, 20, circleSize + 20);
   
-  // Draw arrow
-  fill(255);
-  rect(arrowX, barY - 10, 20, barHeight + 20);
-  
-  // Update arrow position
   arrowX += arrowSpeed;
-  if (arrowX >= barX + barWidth || arrowX <= barX) {
+  if (arrowX >= width || arrowX <= 0) {
     arrowSpeed *= -1;
   }
   
-  // Check if clicked in circle
-  if (mouseIsPressed && dist(mouseX, mouseY, circleX, circleY) < circleSize / 2) {
-    if (arrowX > barX + 2 * thirdWidth && arrowX < barX + barWidth) {
-      circleSize -= 5; // Decrease circle size when clicked on the red part
-      clickedOnRed++;
-    } else if (arrowX > barX + thirdWidth && arrowX < barX + 2 * thirdWidth) {
-      circleSize += 5; // Increase circle size when clicked on the green part
-      clickedOnGreen++;
+  if (!won && mouseIsPressed && mouseX > (width - 450) / 2 && mouseX < (width + 450) / 2 && mouseY > height - 450 && mouseY < height - 50) {
+    circleSize += 5;
+    clickedOnGreen++;
+    if (clickedOnGreen % 50 == 0) {
+      currentEggIndex = min(floor(clickedOnGreen / 50), eggImages.length - 1);
+    }
+    if (clickedOnGreen >= 300) {
+      won = true;
     }
   }
   
-  // Display click counts
-  textSize(16);
+  textSize(26);
   fill(0);
-  text("Clicks on Green: " + clickedOnGreen, 10, height - 50);
-  text("Clicks on Red: " + clickedOnRed, 10, height - 30);
+  text("Cliques: " + clickedOnGreen, 10, height - 50);
+
+  let imgX = (width - 450) / 2;
+  let imgY = height - 450;
+  image(eggImages[currentEggIndex], imgX, imgY, 500, 400);
+  
+  if (won) {
+    textSize(32);
+    fill(255, 0, 0);
+    text("Ganhaste!", width / 2 - 100, height / 2);
+  }
 }
