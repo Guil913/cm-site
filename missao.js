@@ -31,5 +31,5 @@ function draw() {
 
 function startGame() {
  
-  window.location.href = "bruxas.html";
+  window.location.href = "portalbruxas.html";
 }
