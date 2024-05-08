@@ -7,12 +7,12 @@ let wasMousePressed = false;
 let duendeImage;
 let backgroundImage;
 let layerImage;
-let gameWon = false; // Variable to track if the game is won
+let gameWon = false;
 
 function preload() {
-  duendeImage = loadImage('art/duende.png');
   backgroundImage = loadImage('art/fundo.jpg');
   layerImage = loadImage('art/layer.png');
+  duendeImage = loadImage('art/duende.png');
 }
 
 function setup() {
@@ -30,7 +30,7 @@ function resetDuendeY() {
 function draw() {
   background(backgroundImage);
 
-  if (!gameWon) { // Check if the game is not yet won
+  if (!gameWon) {
     let imageSize = map(squareY, 200, 730, 100, 150);
 
     if (squareDirection === 1) {
@@ -44,42 +44,37 @@ function draw() {
 
     duendeX += squareDirection * squareSpeed / frameRate();
 
-    // Adjust direction if near canvas edge
     if (duendeX > width - imageSize / 2) {
-      squareDirection = -1; // Change direction to move left
-      resetDuendeY(); // Reset random Y-coordinate
+      squareDirection = -1;
+      resetDuendeY();
     } else if (duendeX < imageSize / 2) {
-      squareDirection = 1; // Change direction to move right
-      resetDuendeY(); // Reset random Y-coordinate
+      squareDirection = 1;
+      resetDuendeY();
     }
 
-    // Check for mouse interaction
     let distanceToDuende = dist(mouseX, mouseY, duendeX, squareY);
-    if (distanceToDuende < 40) { // Click detected within 100 pixels radius around duende
+    if (distanceToDuende < 40) {
       if (mouseIsPressed && !wasMousePressed) {
         contador++;
         squareSpeed *= 1.1;
         if (contador >= 7) {
-          gameWon = true; // Set gameWon to true
+          gameWon = true;
         }
       }
     }
 
     wasMousePressed = mouseIsPressed;
 
-    // Display click counter
-    textSize(32);
-    fill(255);
+    textSize(34);
+    fill(0);
     textAlign(CENTER, BOTTOM);
     text("Fragmentos: " + contador, width / 2, height - 10);
   } else {
-    // Display "You win" message
     textSize(48);
     fill(255);
     textAlign(CENTER, CENTER);
-    text("You win!", width / 2, height / 2);
+    text("Ganhaste!", width / 2, height / 2);
   }
 
-  // Display top layer image
   image(layerImage, 0, 0, width, height);
 }

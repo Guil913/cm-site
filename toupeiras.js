@@ -82,5 +82,5 @@ function displayWinMessage() {
   fill(255);
   textSize(64); // Increase text size
   textAlign(CENTER, CENTER);
-  text("You win!", width / 2, height / 2);
+  text("Ganhaste!", width / 2, height / 2);
 }

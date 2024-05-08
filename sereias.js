@@ -4,8 +4,8 @@ let userSequence = [];
 let currentNoteIndex = 0;
 let playingSequence = false;
 let gameStarted = false;
-let winMessage = "You Win!";
-let loseMessage = "Try Again!";
+let winMessage = "Ganhaste!";
+let loseMessage = "Tenta Novamente!";
 let win = false;
 let bgImage;
 
@@ -125,7 +125,7 @@ function restartGame() {
 
 function displayStartMessage() {
   fill(255);
-  text("Click to Start", width / 2, 340);
+  text("Carrega para começar", width / 2, 340);
 }
 
 class PianoTile {

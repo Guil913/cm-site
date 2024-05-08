@@ -27,7 +27,7 @@ function draw() {
   if (gameOver) {
     fill(0);
     textSize(32);
-    text("You Win!", width / 2, height / 2);
+    text("Ganhaste!", width / 2, height / 2);
     return;
   }
 
@@ -35,7 +35,7 @@ function draw() {
   if (!gameStarted) {
     fill(0);
     textSize(44);
-    text("Click to Start", width / 2, height / 2);
+    text("Carrega para Começar", width / 2, height / 2);
     return;
   }
 

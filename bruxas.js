@@ -40,7 +40,7 @@ function draw() {
     fill(255); // Set text color to white
     textSize(64);
     textAlign(CENTER, CENTER);
-    text("You win!", width / 2, height / 2);
+    text("Ganhaste!", width / 2, height / 2);
     noLoop(); // Stop draw loop when "You win" message is displayed
   }
 
@@ -65,9 +65,9 @@ function draw() {
 
   if (showStartMessage) {
     fill(255);
-    textSize(24);
+    textSize(34);
     textAlign(CENTER, CENTER);
-    text("Click to start", width / 2, height / 2);
+    text("Carrega para começar", width / 2, height / 2 +50);
   }
 }
 

@@ -71,7 +71,7 @@ function draw() {
     textSize(32);
     textAlign(CENTER, CENTER);
     fill(255, 0, 0);
-    text("You win!", width / 2, height / 2);
+    text("Parabéns, Ganhaste!", width / 2, height / 2);
   }
   
   let flowerSize = map(plantHeight, 0, 400, 0, 300);
