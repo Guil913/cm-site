@@ -7,15 +7,15 @@ let moleY = [555, 627, 564, 597, 688];
 let currentMole = -1;
 let score = 0;
 let interval = 1550;
-let backgroundImage, bottomLayer, topLayer, gnomeImg; // Declare variable for gnome image
-let gameWon = false; // Variable to track if the game is won
-let moleSize = 80; // Size of the ellipses
+let backgroundImage, bottomLayer, topLayer, gnomeImg; 
+let gameWon = false; 
+let moleSize = 80; 
 
 function preload() {
   backgroundImage = loadImage('art/2.png');
   bottomLayer = loadImage('art/1.png');
   topLayer = loadImage('art/3.png');
-  gnomeImg = loadImage('art/gnomo.png'); // Load gnome image
+  gnomeImg = loadImage('art/gnomo.png'); 
 }
 
 function setup() {
@@ -26,10 +26,9 @@ function setup() {
 
 function draw() {
   imageMode(CORNER);
-  image(bottomLayer, 0, 0, canvasWidth, canvasHeight); // Bottom layer
-  image(backgroundImage, 0, 0, canvasWidth, canvasHeight); // Middle layer background)
-  image(topLayer, 0, 0, canvasWidth, canvasHeight); // Top layer 
-
+  image(bottomLayer, 0, 0, canvasWidth, canvasHeight); 
+  image(backgroundImage, 0, 0, canvasWidth, canvasHeight);
+  image(topLayer, 0, 0, canvasWidth, canvasHeight); 
   for (let i = 0; i < moleX.length; i++) {
     
 noStroke();
@@ -41,25 +40,25 @@ noStroke();
   }
 
   if (currentMole !== -1) {
-    image(gnomeImg, moleX[currentMole] - moleSize / 2, moleY[currentMole] - moleSize / 2 - 30, moleSize, moleSize); // Adjust y-coordinate
+    image(gnomeImg, moleX[currentMole] - moleSize / 2, moleY[currentMole] - moleSize / 2 - 30, moleSize, moleSize); 
   }
 
   fill(0);
   textSize(24);
   textAlign(LEFT, BOTTOM);
-  text(`Capturados: ${score}`, 40, 725); // score texto
+  text(`Capturados: ${score}`, 40, 725); 
 
   if (score >= 7 && !gameWon) {
-    gameWon = true; // Set gameWon to true
+    gameWon = true; 
   }
 
-  if (gameWon) { // Check if the game is won
-    displayWinMessage(); // Display "You win" message
+  if (gameWon) { 
+    displayWinMessage(); 
   }
 }
 
 function mouseClicked() {
-  if (!gameWon) { // Check if the game is not yet won
+  if (!gameWon) { 
     for (let i = 0; i < moleX.length; i++) {
       let distance = dist(moleX[i], moleY[i], mouseX, mouseY);
       if (distance < 40 && i === currentMole) {
@@ -72,7 +71,7 @@ function mouseClicked() {
 }
 
 function changeMolePosition() {
-  if (!gameWon) { // Check if the game is not yet won
+  if (!gameWon) { 
     currentMole = int(random(moleX.length));
     setTimeout(changeMolePosition, interval);
   }
@@ -80,7 +79,7 @@ function changeMolePosition() {
 
 function displayWinMessage() {
   fill(255);
-  textSize(64); // Increase text size
+  textSize(64); 
   textAlign(CENTER, CENTER);
   text("Ganhaste!", width / 2, height / 2);
 }

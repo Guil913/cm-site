@@ -1,19 +1,19 @@
 let capture;
-let threshold = 0.5; // Threshold for detecting yellow
+let threshold = 0.5; 
 let button;
 
 function setup() {
   createCanvas(1080, 760);
   capture = createCapture(VIDEO);
   capture.size(width, height);
-  capture.hide(); // Hide the video feed
+  capture.hide(); 
 
-  // Create the button
+ 
   button = createButton('Dragões');
   button.position(width / 2 - 100, height / 2);
   button.size(200, 50);
   button.mousePressed(goToBruxas);
-  button.hide(); // Initially hide the button
+  button.hide(); 
 }
 
 function draw() {
@@ -22,34 +22,34 @@ function draw() {
 
   let yellowPixels = 0;
 
-  // Load pixels of the video feed
+
   capture.loadPixels();
   
-  // Loop through all pixels and count yellow ones
+ 
   for (let i = 0; i < capture.pixels.length; i += 4) {
     let r = capture.pixels[i];
     let g = capture.pixels[i + 1];
     let b = capture.pixels[i + 2];
     
-    // Convert RGB to HSL color space
+   
     let hsl = rgbToHsl(r, g, b);
-    let hue = hsl[0]; // Hue component
+    let hue = hsl[0]; 
 
-    // Check if the hue corresponds to yellow (expanded range)
+    
     if (hue >= 40 && hue <= 80) {
       yellowPixels++;
     }
   }
 
-  // Calculate the percentage of yellow pixels
+
   let yellowPercentage = yellowPixels / (capture.width * capture.height);
 
-  // Display the yellow percentage
+ 
   fill(0);
   textSize(20);
   text("Yellow percentage: " + nf(yellowPercentage * 100, 2, 2) + "%", 20, 30);
 
-  // Show the button if the yellow percentage exceeds the threshold
+ 
   if (yellowPercentage >= threshold) {
     button.show();
   }
@@ -59,7 +59,7 @@ function goToBruxas() {
   window.location.href = "dragoes.html";
 }
 
-// Function to convert RGB to HSL color space
+
 function rgbToHsl(r, g, b) {
   r /= 255;
   g /= 255;
@@ -69,7 +69,7 @@ function rgbToHsl(r, g, b) {
   let h, s, l = (max + min) / 2;
 
   if (max === min) {
-    h = s = 0; // achromatic
+    h = s = 0; 
   } else {
     let d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);

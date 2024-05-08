@@ -5,12 +5,12 @@ let rectColor = "red";
 let timerDuration = 0;
 let rectX;
 let showStartMessage = true;
-let img1, img2, stiltonImg; // Declare variable for stilton image
+let img1, img2, stiltonImg; 
 
 function preload() {
   img1 = loadImage('art/sp1.png');
   img2 = loadImage('art/sp2.png');
-  stiltonImg = loadImage('art/stilton.png'); // Load stilton image
+  stiltonImg = loadImage('art/stilton.png'); 
 }
 
 function setup() {
@@ -29,19 +29,19 @@ function draw() {
   }
     console.log("Stilton Y-coordinate:", circleY);
   noStroke();
-  fill(255, 0); // Set rectangle fill color with 0 opacity
+  fill(255, 0); 
   rect(rectX - 25, 0, 50, 50);
 
-  // Draw stilton image 4 pixels to the left
+
   let stiltonX = width / 2 - circleDiameter / 2 - 4;
   image(stiltonImg, stiltonX, circleY - circleDiameter / 2, circleDiameter, circleDiameter);
 
   if (circleY <= 180) {
-    fill(255); // Set text color to white
+    fill(255); 
     textSize(64);
     textAlign(CENTER, CENTER);
     text("Ganhaste!", width / 2, height / 2);
-    noLoop(); // Stop draw loop when "You win" message is displayed
+    noLoop(); 
   }
 
   if (rectColor !== "red") {
