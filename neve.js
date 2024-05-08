@@ -1,6 +1,6 @@
 let images = [];
 let timer = 0;
-let interval = 2500; // 3 seconds
+let interval = 2000; // 3 seconds
 let showingImages = false; // Initially set to false
 let gameOver = false;
 let imagePositions = [];
@@ -34,7 +34,7 @@ function draw() {
   // Check if game has started, if not, display "click to start" message
   if (!gameStarted) {
     fill(0);
-    textSize(32);
+    textSize(44);
     text("Click to Start", width / 2, height / 2);
     return;
   }
