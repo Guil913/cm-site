@@ -1,6 +1,6 @@
 let images = [];
 let timer = 0;
-let interval = 2000; 
+let interval = 2500; 
 let showingImages = false; 
 let gameOver = false;
 let imagePositions = [];

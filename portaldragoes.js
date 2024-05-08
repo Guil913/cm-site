@@ -1,5 +1,5 @@
 let capture;
-let threshold = 0.5; 
+let threshold = 0.45; 
 let button;
 
 function setup() {
