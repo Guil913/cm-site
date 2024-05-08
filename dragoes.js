@@ -7,8 +7,10 @@ let clickedOnGreen;
 let eggImages = [];
 let currentEggIndex = 0;
 let won = false;
+let backgroundImage;
 
 function preload() {
+  backgroundImage = loadImage('art/eggbg.png');
   for (let i = 1; i <= 7; i++) {
     eggImages.push(loadImage('art/egg' + i + '.png'));
   }
@@ -25,7 +27,7 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(backgroundImage);
   
   noStroke();
   fill(0, 255, 0, 0);
@@ -51,10 +53,10 @@ function draw() {
   }
   
   textSize(26);
-  fill(0);
+  fill(255);
   text("Cliques: " + clickedOnGreen, 10, height - 50);
 
-  let imgX = (width - 450) / 2;
+  let imgX = (width - 550) / 2;
   let imgY = height - 450;
   image(eggImages[currentEggIndex], imgX, imgY, 500, 400);
   
