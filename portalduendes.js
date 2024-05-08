@@ -46,7 +46,7 @@ function draw() {
 
   fill(0);
   textSize(20);
-  text("Green percentage: " + nf(greenPercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Verde: " + nf(greenPercentage * 100, 2, 2) + "%", 20, 30);
 
 
   if (greenPercentage >= threshold) {

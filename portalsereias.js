@@ -47,7 +47,7 @@ function draw() {
  
   fill(0);
   textSize(20);
-  text("Orange percentage: " + nf(orangePercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Laranja: " + nf(orangePercentage * 100, 2, 2) + "%", 20, 30);
 
  
   if (orangePercentage >= threshold) {

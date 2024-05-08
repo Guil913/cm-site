@@ -55,7 +55,7 @@ function draw() {
   
   fill(0);
   textSize(20);
-  text("Purple percentage: " + nf(purplePercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Roxo: " + nf(purplePercentage * 100, 2, 2) + "%", 20, 30);
 
 
   if (purplePercentage >= threshold && !buttonShown) {

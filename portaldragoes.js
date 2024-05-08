@@ -47,7 +47,7 @@ function draw() {
  
   fill(0);
   textSize(20);
-  text("Yellow percentage: " + nf(yellowPercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Amarelo: " + nf(yellowPercentage * 100, 2, 2) + "%", 20, 30);
 
  
   if (yellowPercentage >= threshold) {

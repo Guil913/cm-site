@@ -53,7 +53,7 @@ function draw() {
   // 
   fill(0);
   textSize(20);
-  text("Blue percentage: " + nf(bluePercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Azul: " + nf(bluePercentage * 100, 2, 2) + "%", 20, 30);
 
   // 
   if (bluePercentage >= threshold && !buttonShown) {

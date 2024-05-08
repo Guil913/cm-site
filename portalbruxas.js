@@ -42,7 +42,7 @@ function draw() {
 
   fill(0);
   textSize(20);
-  text("Red percentage: " + nf(redPercentage * 100, 2, 2) + "%", 20, 30);
+  text("Percentagem de Vermelho: " + nf(redPercentage * 100, 2, 2) + "%", 20, 30);
 
  
   if (redPercentage >= threshold) {
