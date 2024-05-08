@@ -47,7 +47,7 @@ noStroke();
   fill(0);
   textSize(24);
   textAlign(LEFT, BOTTOM);
-  text(`Score: ${score}`, 70, 725); // score texto
+  text(`Capturados: ${score}`, 40, 725); // score texto
 
   if (score >= 7 && !gameWon) {
     gameWon = true; // Set gameWon to true

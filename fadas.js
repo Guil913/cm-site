@@ -10,18 +10,19 @@ let waterCanDragging = false;
 let seedOriginalX, seedOriginalY;
 let waterCanOriginalX, waterCanOriginalY;
 
-let seedTouchedHole = false; // Flag to track if seed touched hole
-let holeIsPink = false; // Flag to track if hole is pink
+let seedTouchedHole = false;
+let holeIsPink = false;
+let gameEnded = false;
 
-let gameEnded = false; // Flag to track if game has ended
-
-let seedImage, waterCanImage, flowerImage; // Image variables
+let seedImage, waterCanImage, flowerImage, backgroundImage, topImage;
+let plantedTextOpacity = 0;
 
 function preload() {
-  // Load images
   seedImage = loadImage('art/seed.png');
   waterCanImage = loadImage('art/regador.png');
   flowerImage = loadImage('art/flower.png');
+  backgroundImage = loadImage('art/fadasbg.png');
+  topImage = loadImage('art/fadastop.png');
 }
 
 function setup() {
@@ -41,38 +42,31 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(backgroundImage);
   
-  // Draw seed
-  image(seedImage, seedX, seedY, 50, 50);
+  image(seedImage, seedX, seedY, 80, 80);
+  image(waterCanImage, waterCanX, waterCanY, 80, 80);
   
-  // Draw watering can
-  image(waterCanImage, waterCanX, waterCanY, 50, 50);
-  
-  // Draw hole
   fill(holeColor);
   rect(holeX - 25, holeY - 25, 50, 50);
   
-  // Draw plant
   fill(34, 44, 0);
   rect(width / 2 -10 , height - 80 - plantHeight, 20, plantHeight);
   
-  // Check if seed touches the hole only once
   if (seedDragging && !seedTouchedHole && seedX + 25 > holeX - 25 && seedX + 25 < holeX + 25 && seedY + 25 > holeY - 25 && seedY + 25 < holeY + 25) {
-    holeColor = color(255, 192, 203); // Pink color
-    seedTouchedHole = true; // Set flag to true
-    holeIsPink = true; // Set flag to true
+    holeColor = color(255, 192, 203);
+    seedTouchedHole = true;
+    holeIsPink = true;
+    plantedTextOpacity = 255;
   }
   
-  // Check if watering can touches the hole only if hole is pink and game has not ended
   if (waterCanDragging && holeIsPink && !gameEnded && waterCanX + 25 > holeX - 25 && waterCanX + 25 < holeX + 25 && waterCanY + 25 > holeY - 25 && waterCanY + 25 < holeY + 25) {
-    plantHeight += 3; // Increase height slower
+    plantHeight += 3;
     if (plantHeight >= 400) {
       gameEnded = true;
     }
   }
   
-  // Display "You win" message when green square's height reaches 400
   if (gameEnded) {
     textSize(32);
     textAlign(CENTER, CENTER);
@@ -80,9 +74,18 @@ function draw() {
     text("You win!", width / 2, height / 2);
   }
   
-  // Draw flower on top of the plant at the highest point, proportional to plant height
-  let flowerSize = map(plantHeight, 0, 400, 0, 300); // Map plant height to flower size
+  let flowerSize = map(plantHeight, 0, 400, 0, 300);
   image(flowerImage, width / 2 - flowerSize / 2, height - 50 - plantHeight - flowerSize, flowerSize, flowerSize);
+  
+  image(topImage, 0, 0, width, height);
+  
+  if (plantedTextOpacity > 0) {
+    textSize(44);
+    textAlign(CENTER, CENTER);
+    fill( 0 , plantedTextOpacity);
+    text("Semente Plantada", width / 2, height / 2);
+    plantedTextOpacity -= 2;
+  }
 }
 
 function mousePressed() {
@@ -98,12 +101,11 @@ function mouseReleased() {
   waterCanDragging = false;
   
   if (!seedTouchedHole) {
-    holeColor = color(0, 255, 0); // Back to green only if seed hasn't touched hole
+    holeColor = color(0, 255, 0);
   }
   
-  plantHeight = 0; // Reset plant height
+  plantHeight = 0;
   
-  // Return dragged squares to original position
   seedX = seedOriginalX;
   seedY = seedOriginalY;
   waterCanX = waterCanOriginalX;

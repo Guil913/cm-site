@@ -1,203 +1,177 @@
-let pianoKeys = [];
-let selectedKeys = [];
-let gameState = "waiting";
-let numKeys = 7;
-let currentSequence = [];
-let playerSequence = [];
-let round = 1;
-let notification = "";
-let revealIndex = 0; // Index for revealing tiles one by one
-let countdown = 3; // Countdown timer between rounds
-let countdownInterval;
-let clickedKey = -1; // Index of the clicked key
+let pianoTiles = [];
+let sequence = [];
+let userSequence = [];
+let currentNoteIndex = 0;
+let playingSequence = false;
+let gameStarted = false;
+let winMessage = "You Win!";
+let loseMessage = "Try Again!";
+let win = false;
+let bgImage;
+
+function preload() {
+  bgImage = loadImage('art/ocean.png');
+}
 
 function setup() {
-  createCanvas(400, 200);
-  for (let i = 0; i < numKeys; i++) {
-    pianoKeys.push(new PianoKey(i * 50 + 50, height / 2, 40, 100));
-  }
+  createCanvas(1080, 760);
   textAlign(CENTER, CENTER);
-  textSize(20);
-  startGame(); // Start the game immediately
+  textSize(32);
+  for (let i = 0; i < 7; i++) {
+    let x = map(i, 0, 6, 0, width - 70);
+    pianoTiles.push(new PianoTile(x, height / 2, 70, 200, i));
+  }
 }
 
 function draw() {
-  background(240);
-
-  for (let key of pianoKeys) {
-    key.display();
-  }
-
-  if (notification !== "") {
-    fill(0);
-    text(notification, width / 2, height / 2 + 30);
-    setTimeout(() => {
-      notification = "";
-    }, 1000);
-  }
-
-  fill(0);
-  text("Round " + round, width / 2, height / 2);
-
-  if (countdown > 0 && gameState === "waiting") {
-    text(countdown, width / 2, height / 2 + 50);
-  }
-
-  if (gameState === "playing") {
-    if (frameCount % 30 === 0) {
+  background(bgImage);
+  if (!gameStarted) {
+    displayStartMessage();
+  } else {
+    if (playingSequence) {
       playSequence();
+    } else {
+      displayNotes();
     }
   }
-
-  // Briefly change the color of the clicked key to cyan
-  if (clickedKey !== -1) {
-    pianoKeys[clickedKey].color = color(0, 255, 255);
-    setTimeout(() => {
-      pianoKeys[clickedKey].color = color(0, 255, 0);
-      clickedKey = -1; // Reset clicked key
-    }, 200);
-  }
   
-  // Start countdown if gameState is waiting
-  if (gameState === "waiting") {
-    startCountdown();
+  if (win) {
+    fill(0, 255, 0);
+    text(winMessage, width / 2, height / 2);
   }
 }
 
-function mousePressed() {
-  if (gameState === "playing") {
-    for (let i = 0; i < pianoKeys.length; i++) {
-      if (pianoKeys[i].contains(mouseX, mouseY)) {
-        playerSequence.push(i);
-        clickedKey = i; // Set clicked key
-        if (playerSequence.length === currentSequence.length) {
-          checkSequence();
-        }
-      }
-    }
+function mouseClicked() {
+  if (!gameStarted) {
+    startGame();
   }
 }
 
 function startGame() {
-  selectedKeys = [];
-  currentSequence = [];
-  playerSequence = [];
-  notification = "";
-  revealIndex = 0;
-  countdown = 3;
-  gameState = "waiting"; // Start the game
+  gameStarted = true;
+  generateSequence();
+  playSequence();
 }
 
-function startCountdown() {
-  countdown = 3;
-  if (round > 1) {
-    countdownInterval = setInterval(() => {
-      countdown--;
-      if (countdown === 0) {
-        clearInterval(countdownInterval);
-        gameState = "playing"; // Start the game after countdown
-        selectKeys(round);
-      }
-    }, 1000);
-  } else {
-    gameState = "playing"; // Start the game immediately in the first round
-    selectKeys(round);
+function generateSequence() {
+  sequence = [];
+  for (let i = 0; i < 7; i++) {
+    let noteIndex = floor(random(0, 7));
+    sequence.push(noteIndex);
   }
-}
-
-function selectKeys(num) {
-  selectedKeys = [];
-  const maxKeys = (num === 3) ? 3 : num; // Limit to 3 keys for round 3
-  for (let i = 0; i < maxKeys; i++) {
-    let randomIndex;
-    do {
-      randomIndex = floor(random(numKeys));
-    } while (selectedKeys.includes(randomIndex)); // Ensure selected keys are different
-    selectedKeys.push(randomIndex);
-  }
-  currentSequence = selectedKeys.slice();
 }
 
 function playSequence() {
-  if (revealIndex < round) {
-    let keyIndex = currentSequence[revealIndex];
-    highlightKey(keyIndex);
-    setTimeout(() => {
-      unhighlightKey(keyIndex);
-      revealIndex++;
-    }, 1000);
+  if (currentNoteIndex < sequence.length) {
+    let noteIndex = sequence[currentNoteIndex];
+    let tile = pianoTiles[noteIndex];
+    tile.play();
+    currentNoteIndex++;
+    setTimeout(playSequence, 1500); // Tempo
   } else {
-    gameState = "playing";
-    revealIndex = 0; // Reset reveal index
+    playingSequence = false;
+    currentNoteIndex = 0;
   }
 }
 
-function highlightKey(index) {
-  if (pianoKeys[index]) {
-    if (selectedKeys.includes(index)) {
-      if (round === 2) {
-        pianoKeys[index].color = color(255, 192, 203); // Pink for round 2
-      } else if (round === 3) {
-        pianoKeys[index].color = color(255, 165, 0); // Orange for round 3
-      } else {
-        pianoKeys[index].color = color(0, 0, 255); // Blue for other rounds
+function displayNotes() {
+  for (let tile of pianoTiles) {
+    tile.display();
+  }
+}
+
+function mousePressed() {
+  if (gameStarted && !playingSequence) {
+    for (let tile of pianoTiles) {
+      if (tile.contains(mouseX, mouseY)) {
+        userSequence.push(tile.noteIndex);
+        tile.clicked();
+        if (userSequence.length === sequence.length) {
+          checkWin();
+        }
+        break;
       }
-    } else {
-      pianoKeys[index].color = color(0, 255, 0); // Green for non-selected keys
     }
   }
 }
 
-function unhighlightKey(index) {
-  if (pianoKeys[index]) {
-    pianoKeys[index].color = color(0, 255, 0);
-  }
-}
-
-function checkSequence() {
-  let correct = true;
-  for (let i = 0; i < playerSequence.length; i++) {
-    if (playerSequence[i] !== currentSequence[i]) {
-      correct = false;
+function checkWin() {
+  win = true;
+  for (let i = 0; i < sequence.length; i++) {
+    if (sequence[i] !== userSequence[i]) {
+      win = false;
       break;
     }
   }
-  if (correct) {
-    notification = "Correct!";
-    setTimeout(() => {
-      round++;
-      playerSequence = [];
-      startCountdown();
-    }, 1000);
+  
+  if (win) {
+    console.log("Win sequence: " + sequence.join(", "));
   } else {
-    notification = "Wrong...";
-    gameState = "waiting"; // Reset the game
-    round = 1;
-    startCountdown();
+    console.log("Lose sequence: " + userSequence.join(", "));
+    setTimeout(() => {
+      restartGame();
+    }, 2000);
   }
 }
 
-class PianoKey {
-  constructor(x, y, w, h) {
+function restartGame() {
+  sequence = [];
+  userSequence = [];
+  currentNoteIndex = 0;
+  playingSequence = false;
+  gameStarted = false;
+  win = false;
+}
+
+function displayStartMessage() {
+  fill(255);
+  text("Click to Start", width / 2, 340);
+}
+
+class PianoTile {
+  constructor(x, y, w, h, noteIndex) {
     this.x = x;
-    this.y = y;
+    this.y = y + 200;
     this.w = w;
     this.h = h;
-    this.color = color(0, 255, 0);
+    this.noteIndex = noteIndex;
+    this.playing = false;
+    this.clickedColor = color(0, 255, 255);
+    this.fadeDuration = 500;
+    this.fadeStartTime = 0;
   }
-
+  
   display() {
-    fill(this.color);
-    rectMode(CENTER);
+    noStroke();
+    if (this.playing) {
+      fill(255, 165, 0);
+    } else {
+      fill(255);
+    }
     rect(this.x, this.y, this.w, this.h);
+    stroke(0);
+    strokeWeight(4);
+    noFill();
+    rect(this.x, this.y, this.w, this.h);
+    
+    if (millis() - this.fadeStartTime < this.fadeDuration) {
+      fill(this.clickedColor);
+      rect(this.x, this.y, this.w, this.h);
+    }
   }
-
+  
   contains(px, py) {
-    return (
-      px > this.x - this.w / 2 &&
-      px < this.x + this.w / 2 &&
-      py > this.y - this.h / 2 &&
-      py < this.y + this.h / 2
-    );
+    return px > this.x && px < this.x + this.w && py > this.y && py < this.y + this.h;
+  }
+  
+  play() {
+    this.playing = true;
+    setTimeout(() => {
+      this.playing = false;
+    }, 500);
+  }
+  
+  clicked() {
+    this.fadeStartTime = millis();
   }
 }

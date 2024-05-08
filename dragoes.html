@@ -4,6 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sketch</title>
+  <style>
+    #redirectButton {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: orange;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
   <link rel="stylesheet" type="text/css" href="style.css">
   <script src="libraries/p5.min.js"></script>
   <script src="libraries/p5.sound.min.js"></script>
@@ -12,7 +29,7 @@
   <script src="dragoes.js"></script>
 
   <!-- Button for redirecting to "toupeira.html" -->
-  <button id="redirectButton" style="position: fixed; bottom: 20px; right: 20px;">Go to Duende</button>
+  <button id="redirectButton" style="position: fixed; top: 20px; left: 20px;">Go to Duende</button>
 
   <script>
     // Add event listener to the button
