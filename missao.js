@@ -11,7 +11,7 @@ function setup() {
 
 
   startButton = createButton('Começa');
-  startButton.position(width / 2 + 170 , height / 2 +90);
+  startButton.position(width / 2 + 270 , height / 2 +90);
   startButton.size(100, 35);
   startButton.style('font-size', '20px');
   startButton.style('background-color', '#CB8813');

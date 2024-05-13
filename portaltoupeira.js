@@ -1,5 +1,5 @@
 let capture;
-let threshold = 0.8; //percentagem
+let threshold = 0.5; //percentagem
 let button;
 let buttonShown = false; 
 let peakPercentage = 0; 
