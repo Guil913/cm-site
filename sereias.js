@@ -14,7 +14,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1080, 760);
+  createCanvas(1550, 840);
   textAlign(CENTER, CENTER);
   textSize(32);
   for (let i = 0; i < 7; i++) {

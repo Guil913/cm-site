@@ -1,8 +1,8 @@
-let canvasWidth = 1080;
-let canvasHeight = 760;
+let canvasWidth = 1550; 
+let canvasHeight = 840;
 
-let moleX = [351, 412, 590, 739, 579];
-let moleY = [555, 627, 564, 597, 688];
+let moleX = [494, 597, 851, 839, 1065];
+let moleY = [610, 692, 621, 754, 662];
 
 let currentMole = -1;
 let score = 0;
@@ -46,7 +46,7 @@ noStroke();
   fill(0);
   textSize(24);
   textAlign(LEFT, BOTTOM);
-  text(`Capturados: ${score}`, 40, 725); 
+  text(`Capturados: ${score}`, 80, 805); 
 
   if (score >= 7 && !gameWon) {
     gameWon = true; 

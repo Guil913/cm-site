@@ -15,7 +15,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1080, 760);
+  createCanvas(1550, 840);
   timer = millis(); 
   textAlign(CENTER, CENTER);
 }
@@ -67,8 +67,8 @@ function draw() {
     imagePositions = [];
     let attempts = 0;
     while (imagePositions.length < 7 && attempts < 100) {
-      let x = random(300, 840);
-      let y = random(550, 750);
+      let x = random(500, 1240);
+      let y = random(650, 800);
       if (!tooClose(x, y, imagePositions)) {
         imagePositions.push({ x: x, y: y, clicked: false });
       }

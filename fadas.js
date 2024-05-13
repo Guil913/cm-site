@@ -26,12 +26,12 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1080, 760);
-  seedOriginalX = 900;
+  createCanvas(1550, 840);
+  seedOriginalX = 1200;
   seedOriginalY = 350;
   seedX = seedOriginalX;
   seedY = seedOriginalY;
-  waterCanOriginalX = 900;
+  waterCanOriginalX = 1200;
   waterCanOriginalY = 500;
   waterCanX = waterCanOriginalX;
   waterCanY = waterCanOriginalY;

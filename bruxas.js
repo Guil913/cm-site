@@ -14,7 +14,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1080, 760);
+  createCanvas(1550, 840);
   frameRate(60);
   circleY = height - circleDiameter / 2;
   rectX = width / 2;

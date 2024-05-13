@@ -5,7 +5,7 @@ let buttonShown = false;
 let peakPercentage = 0; 
 
 function setup() {
-  createCanvas(1080, 760);
+  createCanvas(1550, 840);
   capture = createCapture(VIDEO);
   capture.size(width, height);
   capture.hide();
