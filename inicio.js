@@ -7,7 +7,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1550, 860);
+  createCanvas(1550, 825);
 
 
   startButton = createButton('Jogar');
