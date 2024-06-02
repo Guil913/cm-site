@@ -2,7 +2,7 @@ let capture;
 let threshold = 0.5; //percentagem
 let button;
 let buttonShown = false; 
-let peakPercentage = 0; 
+let peakPercentage = 0;  
 
 function setup() {
   createCanvas(1550, 840);
