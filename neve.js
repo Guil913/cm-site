@@ -15,7 +15,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1550, 840);
+  createCanvas(1550, 863);
   timer = millis(); 
   textAlign(CENTER, CENTER);
 }

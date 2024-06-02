@@ -16,7 +16,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1550, 840);
+  createCanvas(1550, 863);
   duendeX = width / 2;
   squareSpeed = width / 2;
   cursor(HAND);

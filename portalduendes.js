@@ -3,7 +3,7 @@ let threshold = 0.5;
 let button;
 
 function setup() {
-  createCanvas(1550, 840);
+  createCanvas(1550, 863);
   capture = createCapture(VIDEO);
   capture.size(width, height);
   capture.hide(); 

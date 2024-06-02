@@ -7,7 +7,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(1550, 840);
+  createCanvas(1550, 863);
 
 
   startButton = createButton('Volta ao Início');

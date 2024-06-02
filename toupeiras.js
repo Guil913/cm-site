@@ -1,5 +1,5 @@
 let canvasWidth = 1550; 
-let canvasHeight = 840;
+let canvasHeight = 863;
 
 let moleX = [494, 597, 851, 839, 1065];
 let moleY = [610, 692, 621, 754, 662];
