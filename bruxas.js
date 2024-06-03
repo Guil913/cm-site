@@ -5,12 +5,16 @@ let rectColor = "red";
 let timerDuration = 0;
 let rectX;
 let showStartMessage = true;
-let img1, img2, stiltonImg; 
+let img1, img2, stiltonImg;
+let instrucoesImg;
+let showInstructions = true;
+let fadeAlpha = 255; // Variable for the black fade-in opacity
 
 function preload() {
   img1 = loadImage('art/sp1.png');
   img2 = loadImage('art/sp2.png');
-  stiltonImg = loadImage('art/stilton.png'); 
+  stiltonImg = loadImage('art/stilton.png');
+  instrucoesImg = loadImage('art/instrucoes1.png');
 }
 
 function setup() {
@@ -27,21 +31,20 @@ function draw() {
   } else {
     background(img1);
   }
-    console.log("Stilton Y-coordinate:", circleY);
-  noStroke();
-  fill(255, 0); 
-  rect(rectX - 25, 0, 50, 50);
 
+  noStroke();
+  fill(255, 0);
+  rect(rectX - 25, 0, 50, 50);
 
   let stiltonX = width / 2 - circleDiameter / 2 - 4;
   image(stiltonImg, stiltonX, circleY - circleDiameter / 2, circleDiameter, circleDiameter);
 
   if (circleY <= 180) {
-    fill(255); 
+    fill(255);
     textSize(64);
     textAlign(CENTER, CENTER);
     text("Ganhaste!", width / 2, height / 2);
-    noLoop(); 
+    noLoop();
   }
 
   if (rectColor !== "red") {
@@ -67,7 +70,21 @@ function draw() {
     fill(255);
     textSize(34);
     textAlign(CENTER, CENTER);
-    text("Carrega para começar", width / 2, height / 2 +50);
+    text("Carrega para começar", width / 2, height / 2 + 50);
+  }
+
+  if (showInstructions) {
+    filter(BLUR, 5);
+    let imgX = (width - instrucoesImg.width) / 2;
+    let imgY = (height - instrucoesImg.height) / 2;
+    image(instrucoesImg, imgX, imgY);
+  }
+
+  // Black fade-in effect
+  if (fadeAlpha > 0) {
+    fill(0, fadeAlpha);
+    rect(0, 0, width, height);
+    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
   }
 }
 
@@ -78,7 +95,9 @@ function changeRectColor() {
 }
 
 function mouseClicked() {
-  if (showStartMessage) {
+  if (showInstructions) {
+    showInstructions = false;
+  } else if (showStartMessage) {
     showStartMessage = false;
   }
 }
