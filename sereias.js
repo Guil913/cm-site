@@ -8,9 +8,13 @@ let winMessage = "Ganhaste!";
 let loseMessage = "Tenta Novamente!";
 let win = false;
 let bgImage;
+let instrucoesImg;
+let showInstructions = true;
+let fadeAlpha = 255; // Variable for the black fade-in opacity
 
 function preload() {
   bgImage = loadImage('art/ocean.png');
+  instrucoesImg = loadImage('art/instrucoes2.png'); // Load the instructions image
 }
 
 function setup() {
@@ -25,7 +29,10 @@ function setup() {
 
 function draw() {
   background(bgImage);
-  if (!gameStarted) {
+
+  if (showInstructions) {
+    filter(BLUR, 5); // Apply blur to the background
+  } else if (!gameStarted) {
     displayStartMessage();
   } else {
     if (playingSequence) {
@@ -34,15 +41,30 @@ function draw() {
       displayNotes();
     }
   }
-  
+
   if (win) {
     fill(0, 255, 0);
     text(winMessage, width / 2, height / 2);
   }
+
+  if (showInstructions) {
+    let imgX = (width - instrucoesImg.width) / 2;
+    let imgY = (height - instrucoesImg.height) / 2;
+    image(instrucoesImg, imgX, imgY); // Display the instructions image
+  }
+
+  // Black fade-in effect
+  if (fadeAlpha > 0) {
+    fill(0, fadeAlpha);
+    rect(0, 0, width, height);
+    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
+  }
 }
 
 function mouseClicked() {
-  if (!gameStarted) {
+  if (showInstructions) {
+    showInstructions = false;
+  } else if (!gameStarted) {
     startGame();
   }
 }

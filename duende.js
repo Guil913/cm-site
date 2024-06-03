@@ -8,11 +8,15 @@ let duendeImage;
 let backgroundImage;
 let layerImage;
 let gameWon = false;
+let instrucoesImg;
+let showInstructions = true;
+let fadeAlpha = 255; // Variable for the black fade-in opacity
 
 function preload() {
   backgroundImage = loadImage('art/fundo.jpg');
   layerImage = loadImage('art/layer.png');
   duendeImage = loadImage('art/duende.png');
+  instrucoesImg = loadImage('art/instrucoes4.png'); // Load the instructions image
 }
 
 function setup() {
@@ -29,6 +33,10 @@ function resetDuendeY() {
 
 function draw() {
   background(backgroundImage);
+
+  if (showInstructions) {
+    filter(BLUR, 5); // Apply blur to the background
+  }
 
   if (!gameWon) {
     let imageSize = map(squareY, 200, 730, 100, 150);
@@ -77,4 +85,23 @@ function draw() {
   }
 
   image(layerImage, 0, 0, width, height);
+
+  if (showInstructions) {
+    let imgX = (width - instrucoesImg.width) / 2;
+    let imgY = (height - instrucoesImg.height) / 2;
+    image(instrucoesImg, imgX, imgY); // Display the instructions image
+  }
+
+  // Black fade-in effect
+  if (fadeAlpha > 0) {
+    fill(0, fadeAlpha);
+    rect(0, 0, width, height);
+    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
+  }
+}
+
+function mouseClicked() {
+  if (showInstructions) {
+    showInstructions = false;
+  }
 }

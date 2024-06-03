@@ -8,12 +8,16 @@ let eggImages = [];
 let currentEggIndex = 0;
 let won = false;
 let backgroundImage;
+let instrucoesImg;
+let showInstructions = true;
+let fadeAlpha = 255; // Variable for the black fade-in opacity
 
 function preload() {
   backgroundImage = loadImage('art/eggbg.png');
   for (let i = 1; i <= 7; i++) {
     eggImages.push(loadImage('art/egg' + i + '.png'));
   }
+  instrucoesImg = loadImage('art/instrucoes3.png'); // Load the instructions image
 }
 
 function setup() {
@@ -29,6 +33,10 @@ function setup() {
 function draw() {
   background(backgroundImage);
   
+  if (showInstructions) {
+    filter(BLUR, 5); // Apply blur to the background
+  }
+
   noStroke();
   fill(0, 255, 0, 0);
   ellipse(circleX, circleY, circleSize);
@@ -64,5 +72,24 @@ function draw() {
     textSize(32);
     fill(255, 0, 0);
     text("Ganhaste!", width / 2 - 100, height / 2);
+  }
+
+  if (showInstructions) {
+    let imgX = (width - instrucoesImg.width) / 2;
+    let imgY = (height - instrucoesImg.height) / 2;
+    image(instrucoesImg, imgX, imgY); // Display the instructions image
+  }
+
+  // Black fade-in effect
+  if (fadeAlpha > 0) {
+    fill(0, fadeAlpha);
+    rect(0, 0, width, height);
+    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
+  }
+}
+
+function mouseClicked() {
+  if (showInstructions) {
+    showInstructions = false;
   }
 }
