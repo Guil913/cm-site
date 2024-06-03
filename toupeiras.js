@@ -23,7 +23,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(canvasWidth, canvasHeight);
+  createCanvas(1550, 863);
   frameRate(60);
   changeMolePosition();
 }
