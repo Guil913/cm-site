@@ -16,3 +16,12 @@ canvas {
   font-weight: normal;
   font-style: normal;
 }
+draw{
+
+  font-family: 'Luckiest Guy', sans-serif;
+}
+
+button,main,text{
+font-weight: lighter;
+  font-family: 'Luckiest Guy', sans-serif;
+}
