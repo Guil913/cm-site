@@ -8,7 +8,7 @@ let showStartMessage = true;
 let img1, img2, stiltonImg;
 let instrucoesImg;
 let showInstructions = true;
-let fadeAlpha = 255; // Variable for the black fade-in opacity
+let fadeAlpha = 255; 
 
 function preload() {
   img1 = loadImage('art/sp1.png');
@@ -27,7 +27,10 @@ function setup() {
 
 function draw() {
   if (rectColor === "red") {
-    background(img2);
+    // shake tremor
+    let shakeOffsetX = random(-10, 10);
+    let shakeOffsetY = random(-10, 10);
+    image(img2, shakeOffsetX, shakeOffsetY, width, height);
   } else {
     background(img1);
   }
@@ -80,11 +83,11 @@ function draw() {
     image(instrucoesImg, imgX, imgY);
   }
 
-  // Black fade-in effect
+  
   if (fadeAlpha > 0) {
     fill(0, fadeAlpha);
     rect(0, 0, width, height);
-    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
+    fadeAlpha -= 3; 
   }
 }
 
