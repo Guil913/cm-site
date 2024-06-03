@@ -4,7 +4,7 @@ let overlayImage;
 let button;
 
 function preload() {
-  overlayImage = loadImage("art/p5 (4).png");
+  overlayImage = loadImage("art/p5 (5).png");
 }
 
 function setup() {
