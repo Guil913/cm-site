@@ -31,5 +31,5 @@ function draw() {
 
 function startGame() {
  
-  window.location.href = "index.html";
+  window.location.href = "index2.html";
 }
