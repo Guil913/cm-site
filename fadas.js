@@ -74,10 +74,11 @@ function draw() {
   }
 
   if (gameEnded) {
-    textSize(32);
+    textSize(62);
+    textFont('Luckiest Guy');
     textAlign(CENTER, CENTER);
-    fill(255, 0, 0);
-    text("Parabéns, Ganhaste!", width / 2, height / 2);
+    fill(0, 0, 0);
+    text("Parabéns, Ganhaste!", width / 2, height / 2+100);
   }
 
   let flowerSize = map(plantHeight, 0, 400, 0, 300);
@@ -87,6 +88,7 @@ function draw() {
 
   if (plantedTextOpacity > 0) {
     textSize(44);
+    textFont('Luckiest Guy');
     textAlign(CENTER, CENTER);
     fill(0, plantedTextOpacity);
     text("Semente Plantada", width / 2, height / 2);

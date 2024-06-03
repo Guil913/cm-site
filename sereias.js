@@ -10,11 +10,12 @@ let win = false;
 let bgImage;
 let instrucoesImg;
 let showInstructions = true;
-let fadeAlpha = 255; // Variable for the black fade-in opacity
+let fadeAlpha = 255; 
+let bubbles = [];
 
 function preload() {
   bgImage = loadImage('art/ocean.png');
-  instrucoesImg = loadImage('art/instrucoes2.png'); // Load the instructions image
+  instrucoesImg = loadImage('art/instrucoes2.png'); 
 }
 
 function setup() {
@@ -31,10 +32,11 @@ function draw() {
   background(bgImage);
 
   if (showInstructions) {
-    filter(BLUR, 5); // Apply blur to the background
+    filter(BLUR, 5); 
   } else if (!gameStarted) {
     displayStartMessage();
   } else {
+    updateBubbles(); 
     if (playingSequence) {
       playSequence();
     } else {
@@ -50,14 +52,14 @@ function draw() {
   if (showInstructions) {
     let imgX = (width - instrucoesImg.width) / 2;
     let imgY = (height - instrucoesImg.height) / 2;
-    image(instrucoesImg, imgX, imgY); // Display the instructions image
+    image(instrucoesImg, imgX, imgY); 
   }
 
-  // Black fade-in effect
+  
   if (fadeAlpha > 0) {
     fill(0, fadeAlpha);
     rect(0, 0, width, height);
-    fadeAlpha -= 3; // Decrease the opacity for fade-in effect
+    fadeAlpha -= 3; 
   }
 }
 
@@ -148,6 +150,52 @@ function restartGame() {
 function displayStartMessage() {
   fill(255);
   text("Carrega para começar", width / 2, 340);
+}
+
+
+class Bubble {
+  constructor(x, y, size) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.speed = random(1, 3);
+    this.alpha = 255;
+  }
+
+  move() {
+    this.y -= this.speed;
+    this.alpha -= 2;
+  }
+
+  display() {
+    noStroke();
+    fill(0, 0, 155, this.alpha);
+    ellipse(this.x, this.y, this.size);
+  }
+
+  isOffScreen() {
+    return this.y < -this.size || this.alpha <= 0;
+  }
+}
+
+
+function createBubble() {
+  let x = random(width);
+  let y = height + 50;
+  let size = random(10, 50);
+  bubbles.push(new Bubble(x, y, size));
+}
+
+
+function updateBubbles() {
+  for (let bubble of bubbles) {
+    bubble.move();
+    bubble.display();
+  }
+  bubbles = bubbles.filter(bubble => !bubble.isOffScreen());
+  if (frameCount % 10 === 0) {
+    createBubble();
+  }
 }
 
 class PianoTile {

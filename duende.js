@@ -74,6 +74,7 @@ function draw() {
     wasMousePressed = mouseIsPressed;
 
     textSize(34);
+    textFont('Luckiest Guy');
     fill(0);
     textAlign(CENTER, BOTTOM);
     text("Fragmentos: " + contador, width / 2, height - 10);

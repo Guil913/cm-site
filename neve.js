@@ -32,15 +32,17 @@ function draw() {
   }
 
   if (gameOver) {
-    fill(0);
-    textSize(32);
+    fill(155,0,155);
+    textSize(52);
+    textFont('Luckiest Guy');
     text("Ganhaste!", width / 2, height / 2);
     return;
   }
 
   if (!gameStarted && !showInstructions) {
-    fill(0);
+    fill(155,0,155);
     textSize(44);
+    textFont('Luckiest Guy');
     text("Carrega para Começar", width / 2, height / 2);
     return;
   }

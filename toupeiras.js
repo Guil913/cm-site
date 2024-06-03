@@ -54,6 +54,7 @@ function draw() {
 
   fill(0);
   textSize(24);
+  textFont('Luckiest Guy');
   textAlign(LEFT, BOTTOM);
   text(`Capturados: ${score}`, 80, 805);
 
@@ -104,6 +105,7 @@ function changeMolePosition() {
 function displayWinMessage() {
   fill(255);
   textSize(64);
+  textFont('Luckiest Guy');
   textAlign(CENTER, CENTER);
   text("Ganhaste!", width / 2, height / 2);
 }

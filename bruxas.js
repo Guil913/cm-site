@@ -72,6 +72,7 @@ function draw() {
   if (showStartMessage) {
     fill(255);
     textSize(34);
+    textFont('Luckiest Guy');
     textAlign(CENTER, CENTER);
     text("Carrega para começar", width / 2, height / 2 + 50);
   }
