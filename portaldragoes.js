@@ -1,6 +1,11 @@
 let capture;
 let threshold = 0.45; 
+let overlayImage;
 let button;
+
+function preload() {
+  overlayImage = loadImage("art/p5 (4).png");
+}
 
 function setup() {
   createCanvas(1550, 863);
@@ -8,11 +13,10 @@ function setup() {
   capture.size(width, height);
   capture.hide(); 
 
- 
   button = createButton('Dragões');
-  button.position(width / 2 - 100, height / 2);
+  positionButton();
   button.size(200, 50);
-  button.mousePressed(goToBruxas);
+  button.mousePressed(goToDragoes);
   button.hide(); 
 }
 
@@ -22,43 +26,59 @@ function draw() {
 
   let yellowPixels = 0;
 
-
   capture.loadPixels();
   
- 
   for (let i = 0; i < capture.pixels.length; i += 4) {
     let r = capture.pixels[i];
     let g = capture.pixels[i + 1];
     let b = capture.pixels[i + 2];
     
-   
     let hsl = rgbToHsl(r, g, b);
     let hue = hsl[0]; 
 
-    
     if (hue >= 40 && hue <= 80) {
       yellowPixels++;
     }
   }
 
-
   let yellowPercentage = yellowPixels / (capture.width * capture.height);
 
- 
+  // Display the percentage in the middle of the screen
   fill(0);
-  textSize(20);
-  text("Percentagem de Amarelo: " + nf(yellowPercentage * 100, 2, 2) + "%", 20, 30);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text(nf(yellowPercentage * 100, 2, 2) + "%", width / 2, height / 2);
 
- 
   if (yellowPercentage >= threshold) {
     button.show();
+  } else {
+    button.hide();
   }
+
+  // Draw overlay image
+  image(overlayImage, 0, 0, width, height);
+
+  // Calculate opacity based on yellow percentage
+  let yellowTintOpacity = yellowPercentage * 255;
+
+  // Apply yellow tint over everything
+  fill(255, 255, 0, yellowTintOpacity);
+  rect(0, 0, width, height);
 }
 
-function goToBruxas() {
+function goToDragoes() {
   window.location.href = "dragoes.html";
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  capture.size(width, height);
+  positionButton();
+}
+
+function positionButton() {
+  button.position(width / 2 - 100, height / 2 + 50);
+}
 
 function rgbToHsl(r, g, b) {
   r /= 255;

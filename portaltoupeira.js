@@ -1,8 +1,11 @@
 let capture;
-let threshold = 0.5; //percentagem
+let threshold = 0.5; 
+let overlayImage;
 let button;
-let buttonShown = false; 
-let peakPercentage = 0;  
+
+function preload() {
+  overlayImage = loadImage("art/p5 (1).png");
+}
 
 function setup() {
   createCanvas(1550, 863);
@@ -10,11 +13,10 @@ function setup() {
   capture.size(width, height);
   capture.hide(); 
 
-
-  button = createButton('Gnomos');
-  button.position(width / 2 - 100, height / 2);
+  button = createButton('Gigantes');
+  positionButton();
   button.size(200, 50);
-  button.mousePressed(goToBruxas);
+  button.mousePressed(goToDuende);
   button.hide(); 
 }
 
@@ -22,51 +24,62 @@ function draw() {
   background(255);
   image(capture, 0, 0, width, height);
 
-  let bluePixels = 0;
+  let greenPixels = 0;
 
   capture.loadPixels();
   
- 
   for (let i = 0; i < capture.pixels.length; i += 4) {
     let r = capture.pixels[i];
     let g = capture.pixels[i + 1];
     let b = capture.pixels[i + 2];
     
-   
     let hsl = rgbToHsl(r, g, b);
     let hue = hsl[0]; 
 
-    if (hue >= 200 && hue <= 260) {
-      bluePixels++;
+    if (hue >= 80 && hue <= 160) {
+      greenPixels++;
     }
   }
 
-  // 
-  let bluePercentage = bluePixels / (capture.width * capture.height);
+  let greenPercentage = greenPixels / (capture.width * capture.height);
 
-  // 
-  if (bluePercentage > peakPercentage) {
-    peakPercentage = bluePercentage;
-    console.log("Peak blue percentage:", peakPercentage);
-  }
-
-  // 
+  // Display the percentage in the middle of the screen
   fill(0);
-  textSize(20);
-  text("Percentagem de Azul: " + nf(bluePercentage * 100, 2, 2) + "%", 20, 30);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text(nf(greenPercentage * 100, 2, 2) + "%", width / 2, height / 2);
 
-  // 
-  if (bluePercentage >= threshold && !buttonShown) {
+  if (greenPercentage >= threshold) {
     button.show();
-    buttonShown = true; // 
+  } else {
+    button.hide();
   }
+
+  // Draw overlay image
+  image(overlayImage, 0, 0, width, height);
+
+  // Calculate opacity based on green percentage
+  let greenTintOpacity = greenPercentage * 255;
+
+  // Apply green tint over everything
+  fill(0, 0, 255, greenTintOpacity);
+  rect(0, 0, width, height);
 }
 
-function goToBruxas() {
-  window.location.href = "toupeira.html";
+function goToDuende() {
+  window.location.href = "toupeiras.html";
 }
 
-// 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  capture.size(width, height);
+  positionButton();
+}
+
+function positionButton() {
+  button.position(width / 2 - 100, height / 2 + 50);
+}
+
 function rgbToHsl(r, g, b) {
   r /= 255;
   g /= 255;
